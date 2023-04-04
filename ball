@@ -1,0 +1,47 @@
+import pygame
+
+pygame.init()
+
+screen_size = (640, 480)
+screen = pygame.display.set_mode(screen_size)
+
+
+ball_size = 50
+ball_radius = 25
+ball_color = (255, 0, 0)
+ball_pos = [screen_size[0] // 2, screen_size[1] // 2]
+
+
+movement_speed = 20
+
+while True:
+    # Handle events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                ball_pos[1] -= movement_speed
+            elif event.key == pygame.K_DOWN:
+                ball_pos[1] += movement_speed
+            elif event.key == pygame.K_LEFT:
+                ball_pos[0] -= movement_speed
+            elif event.key == pygame.K_RIGHT:
+                ball_pos[0] += movement_speed
+
+    if ball_pos[0] - ball_radius < 0:
+        ball_pos[0] = ball_radius
+    elif ball_pos[0] + ball_radius > screen_size[0]:
+        ball_pos[0] = screen_size[0] - ball_radius
+
+    if ball_pos[1] - ball_radius < 0:
+        ball_pos[1] = ball_radius
+    elif ball_pos[1] + ball_radius > screen_size[1]:
+        ball_pos[1] = screen_size[1] - ball_radius
+
+    screen.fill((255, 255, 255))
+
+    pygame.draw.circle(screen, ball_color, ball_pos, ball_radius)
+
+    pygame.display.flip()
